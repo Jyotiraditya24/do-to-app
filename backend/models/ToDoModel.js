@@ -9,7 +9,7 @@ const toDoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    user: {
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },

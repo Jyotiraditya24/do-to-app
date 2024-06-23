@@ -1,16 +1,19 @@
 import express from "express";
 import connection from "./utlis/connection.js";
 import dotenv from "dotenv";
+import authRoutes from "./routes/authRoutes.js";
+import toDoRoutes from "./routes/ToDoRoutes.js";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
 const app = express();
+app.use(express.json());
 
 // ROUTES
-app.use("api/auth", authRoutes);
-app.use("api/posts", postRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/todo", toDoRoutes);
 
 app.listen(PORT, () => {
   connection();

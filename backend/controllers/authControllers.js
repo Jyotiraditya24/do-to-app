@@ -1,5 +1,6 @@
-import User from "../models/UserModel";
+import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
+
 
 export const login = async (req, res) => {
   const { userName, password } = req.body;
@@ -33,28 +34,39 @@ export const login = async (req, res) => {
   }
 };
 
-export const signup = (req, resp) => {
+export const signup = async (req, res) => {
   const { fullName, userName, password } = req.body;
   try {
     // Trying to find if the user exists
-    const user = User.find({ userName: userName });
+    const user = await User.findOne({ userName: userName });
     if (user) {
-      return resp.status(400).json({ error: "Username is already taken" });
+      return res.status(400).json({ error: "Username is already taken" });
     }
 
-    // hash Password
-    const salt = bcrypt.genSalt(10);
-    const hashPassword = bcrypt.hash(password, salt);
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
 
-    // creating and saving user
-    const savedUser = new User({
+    // Creating and saving user
+    const newUser = new User({
+      fullName,
       userName,
       password: hashPassword,
     });
-    savedUser.save();
+
+    const savedUser = await newUser.save();
+
+    // Return success response
+    return res
+      .status(201)
+      .json({ message: "User created successfully", user: savedUser });
   } catch (error) {
-    console.log("Error in SignUp controller" + error.message);
-    return resp.status(500).json({ error: "Internal server error" });
+    console.error("Error in SignUp controller: " + error.message);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
-export const logout = (req, resp) => {};
+
+export const logout = (req, resp) => {
+};
+
+
