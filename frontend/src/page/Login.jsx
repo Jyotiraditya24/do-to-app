@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import logo from "../../public/logo.jpg";
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/authContext";
 
 const Login = () => {
   const [loginInputs, setLoginInputs] = useState({
     username: "",
     password: "",
   });
+
+  const { user, setUser } = useAuthContext();
 
   const handleChange = (e) => {
     setLoginInputs({ ...loginInputs, [e.target.name]: e.target.value });
@@ -41,6 +44,8 @@ const Login = () => {
       }
       //   set the item
       localStorage.setItem("user", JSON.stringify(data));
+      // setting the context data
+      setUser(data);
     } catch (error) {
       alert("An error occurred. Please try again.");
     }
