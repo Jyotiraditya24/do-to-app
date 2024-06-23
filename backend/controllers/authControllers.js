@@ -1,7 +1,6 @@
 import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 
-
 export const login = async (req, res) => {
   const { userName, password } = req.body;
 
@@ -27,7 +26,11 @@ export const login = async (req, res) => {
 
     // Success: return user info or a token
     // You can include a token generation here if you use JWT or similar
-    return res.json({ user });
+    return res.json({
+      id: user._id,
+      fullName: user.fullName,
+      userName: user.userName,
+    });
   } catch (error) {
     console.error("Error in Login controller: " + error.message);
     return res.status(500).json({ error: "Internal server error" });
@@ -66,7 +69,4 @@ export const signup = async (req, res) => {
   }
 };
 
-export const logout = (req, resp) => {
-};
-
-
+export const logout = (req, resp) => {};
