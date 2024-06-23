@@ -1,15 +1,18 @@
 import express from "express";
-import connection from "./connection.js";
+import connection from "./utlis/connection.js";
 import dotenv from "dotenv";
 
 dotenv.config();
 
+const PORT = process.env.PORT || 8080;
+
 const app = express();
 
-app.get("/", (req, resp) => {
-  resp.send("Hello");
-});
+// ROUTES
+app.use("api/auth", authRoutes);
+app.use("api/posts", postRoutes);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   connection();
+  console.log(`Server running on port ${PORT}`);
 });
