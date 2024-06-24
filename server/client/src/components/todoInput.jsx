@@ -21,7 +21,7 @@ const TodoInput = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/todo/createTodos/${user.id}`,
+        `${window.location.origin}/api/todo/createTodos/${user.id}`,
         {
           method: "POST",
           headers: {
