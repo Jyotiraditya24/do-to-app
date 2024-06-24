@@ -15,7 +15,7 @@ const TodoList = () => {
       }
       try {
         const response = await fetch(
-          `${window.location.origin}/api/todo/getAllTodos/${user?.id}`
+          `http://localhost:3001/api/todo/getAllTodos/${user?.id}`
         );
         const data = await response.json();
         setTodos(data);

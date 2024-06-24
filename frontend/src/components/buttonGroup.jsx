@@ -16,7 +16,7 @@ const ButtonGroup = ({ postId }) => {
 
     try {
       const response = await fetch(
-        `${window.location.origin}/api/todo/deleteTodos/${postId}`,
+        `http://localhost:3001/api/todo/deleteTodos/${postId}`,
         {
           method: "DELETE",
         }
@@ -54,7 +54,7 @@ const ButtonGroup = ({ postId }) => {
   const handleSave = async () => {
     try {
       const response = await fetch(
-        `${window.location.origin}/api/todo/updateTodos/${postId}`,
+        `http://localhost:3001/api/todo/updateTodos/${postId}`,
         {
           method: "PATCH",
           headers: {

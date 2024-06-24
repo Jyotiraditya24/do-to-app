@@ -13,23 +13,12 @@ const PORT = process.env.PORT || 8080;
 const __dirname = path.resolve();
 
 const app = express();
-app.use(
-  cors({
-    origin: [],
-    methods: ["GET", "POST", "DELETE", "PATCH"],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 // ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/todo", toDoRoutes);
-
-app.get("/", (req, resp) => {
-  app.use(express.static(path.join(__dirname, "frontend", "dist")));
-  resp.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-});
 
 app.listen(PORT, () => {
   connection();
