@@ -12,7 +12,7 @@ const generateAndSetToken = (resp, userId) => {
       maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
       httpOnly: true, // prevent XSS attacks cross-site scripting attacks
       sameSite: "strict", // prevents cross-site request forgery attacks
-      secure: process.env.NODE_ENV !== "development", // Use secure cookies in production
+      // secure: process.env.NODE_ENV !== "development", // Use secure cookies in production
     });
     resp.json({ message: "Token generated and set successfully" });
   } catch (error) {
