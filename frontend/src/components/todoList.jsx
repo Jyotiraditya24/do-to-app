@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Todo from "../components/todo";
+import Todo from "./todo";
 import { useAuthContext } from "../context/authContext";
 import { useTodoContext } from "../context/todoContext";
 
