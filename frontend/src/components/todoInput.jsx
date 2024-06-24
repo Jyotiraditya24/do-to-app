@@ -6,11 +6,16 @@ const TodoInput = () => {
   const [content, setContent] = useState("");
   const [header, setHeader] = useState("");
   const { user } = useAuthContext();
-  const { todos, setTodos } = useTodoContext();
+  const { setTodos } = useTodoContext();
 
   const handleAddTask = async () => {
     if (!content || !header) {
       alert("Please fill in both the header and content fields.");
+      return;
+    }
+
+    if (!user || !user.id) {
+      alert("User not found. Please log in again.");
       return;
     }
 
@@ -30,14 +35,27 @@ const TodoInput = () => {
       );
 
       if (!response.ok) {
-        console.error("Failed to add task:", response.statusText);
+        const errorMessage = `Failed to add task: ${response.statusText}`;
+        console.error(errorMessage);
+        alert(errorMessage);
         return;
       }
 
       const data = await response.json();
 
       const localData = localStorage.getItem("todos");
-      const localDataParsed = localData ? JSON.parse(localData) : [];
+      let localDataParsed;
+
+      try {
+        localDataParsed = localData ? JSON.parse(localData) : [];
+      } catch (error) {
+        console.error("Error parsing local storage data:", error);
+        localDataParsed = [];
+      }
+
+      if (!Array.isArray(localDataParsed)) {
+        localDataParsed = [];
+      }
 
       localDataParsed.push(data);
       localStorage.setItem("todos", JSON.stringify(localDataParsed));
@@ -48,6 +66,7 @@ const TodoInput = () => {
       alert("Todo Added");
     } catch (error) {
       console.error("Error adding task:", error);
+      alert("There was an error adding the task. Please try again later.");
     }
   };
 
