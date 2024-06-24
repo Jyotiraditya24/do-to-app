@@ -30,7 +30,7 @@ const TodoList = () => {
   }, [user?.id, todos.length]);
 
   return (
-    <div className="flex flex-col gap-5 ">
+    <div className="flex flex-col gap-5 overflow-scroll">
       {todos.length > 0 ? (
         todos.map((todo) => (
           <Todo
