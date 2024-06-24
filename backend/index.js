@@ -26,10 +26,9 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/todo", toDoRoutes);
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-
-app.get("*", (req, resp) => {
-  resp.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+app.get("/", (req, resp) => {
+  app.use(express.static(path.join(__dirname, "frontend", "dist")));
+  resp.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 });
 
 app.listen(PORT, () => {
