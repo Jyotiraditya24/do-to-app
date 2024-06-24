@@ -6,12 +6,15 @@ import Home from "./page/Home";
 import { useAuthContext } from "./context/authContext";
 
 function App() {
-  const navigate = useNavigate();
-  const { user, setUser } = useAuthContext();
+  const { user } = useAuthContext();
   console.log(user);
   return (
     <div>
       <Routes>
+        {/* Redirect from root path to login */}
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        {/* Define routes for login, signup, and home */}
         <Route
           path="/login"
           element={user ? <Navigate to="/home" /> : <Login />}
@@ -20,7 +23,10 @@ function App() {
           path="/signup"
           element={user ? <Navigate to="/home" /> : <Signup />}
         />
-        <Route path="/home" element={user ? <Home /> : <Navigate to="/login" />} />
+        <Route
+          path="/home"
+          element={user ? <Home /> : <Navigate to="/login" />}
+        />
       </Routes>
     </div>
   );
