@@ -60,9 +60,11 @@ export const signup = async (req, res) => {
     const savedUser = await newUser.save();
 
     // Return success response
-    return res
-      .status(201)
-      .json({ message: "User created successfully", user: savedUser });
+    return res.status(201).json({
+      id: savedUser._id,
+      fullName: savedUser.fullName,
+      userName: savedUser.userName,
+    });
   } catch (error) {
     console.error("Error in SignUp controller: " + error.message);
     return res.status(500).json({ error: "Internal server error" });
