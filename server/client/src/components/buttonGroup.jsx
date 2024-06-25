@@ -4,7 +4,8 @@ import { useTodoContext } from "../context/todoContext";
 
 const ButtonGroup = ({ postId }) => {
   const { todos, setTodos } = useTodoContext();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false); // for the edit
+  const [modelIsOpenDelete, setModelIsOpenDelete] = useState(false);
   const [header, setHeader] = useState("");
   const [content, setContent] = useState("");
 
@@ -100,7 +101,9 @@ const ButtonGroup = ({ postId }) => {
       </button>
       <button
         className="bg-red-600 rounded-lg px-4 py-2 text-white"
-        onClick={handleDelete}
+        onClick={() => {
+          setModelIsOpenDelete(true);
+        }}
       >
         Delete
       </button>
@@ -162,6 +165,32 @@ const ButtonGroup = ({ postId }) => {
             </div>
           </form>
         </div>
+      </Modal>
+      <Modal
+        isOpen={modelIsOpenDelete}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Delete Todo"
+        ariaHideApp={false}
+        className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
+      >
+        <form>      
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+              onClick={() => setModelIsOpenDelete(false)}
+            >
+              No
+            </button>
+            <button
+              type="button"
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
+              onClick={handleDelete}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </Modal>
     </div>
   );

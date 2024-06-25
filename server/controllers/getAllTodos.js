@@ -23,6 +23,15 @@ export const createTodos = async (req, resp) => {
     if (!header || !content || !userId) {
       return resp.status(400).json({ error: "All fields are not present" });
     }
+
+    const findHeaderInDB = await ToDo.findOne({ header: header });
+
+    if (findHeaderInDB) {
+      return resp.status(400).json({
+        error: "Header already exists , please give a new header",
+      });
+    }
+
     const singleTodo = new ToDo({
       header: header,
       content: content,
